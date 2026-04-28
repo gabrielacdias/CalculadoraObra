@@ -37,7 +37,3 @@ A documentação completa (Swagger) pode ser acessada em:
 ### 2. Calcular a quantidade de Tijolos
 * **POST** `/api/materiais/tijolos`
 * **Payload de exemplo:** Ver arquivo `requisicao-tijolos.json`.
-
-## Testes Automatizados
-O projeto conta com testes de integração para validar a lógica de negócio. Para rodar os testes:
-```bash
