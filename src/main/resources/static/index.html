@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Obra - Orçamento</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 500px; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { padding: 8px; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Solicitar Orçamento de Materiais</h2>
+    <form id="orcamentoForm">
+        <div class="form-group">
+            <label>Nome do Usuário/Cliente:</label>
+            <input type="text" id="nomeUsuario" required>
+        </div>
+        <div class="form-group">
+            <label>Área Total da Planta (m²):</label>
+            <input type="number" id="areaTotal" step="0.1" required>
+        </div>
+        <div class="form-group">
+            <label>Número de Cômodos:</label>
+            <input type="number" id="numComodos" required>
+        </div>
+        <button type="submit">Salvar Orçamento</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('orcamentoForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const dados = {
+            nomeUsuario: document.getElementById('nomeUsuario').value,
+            areaTotal: parseFloat(document.getElementById('areaTotal').value),
+            numComodos: parseInt(document.getElementById('numComodos').value)
+        };
+
+        try {
+            const response = await fetch('/api/orcamentos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            if (response.ok) {
+                alert('Orçamento salvo com sucesso!');
+                document.getElementById('orcamentoForm').reset();
+            } else {
+                alert('Erro ao salvar orçamento no servidor.');
+            }
+        } catch (error) {
+            alert('Erro de conexão com o servidor.');
+        }
+    });
+</script>
+</body>
+</html>
